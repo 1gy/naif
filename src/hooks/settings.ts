@@ -6,6 +6,7 @@ import {
   useSetRecoilState,
 } from "recoil";
 import { ThemeId, themes } from "../themes";
+import { localStorageEffect } from "../logics/storage";
 
 // Types ===================================================
 
@@ -14,6 +15,9 @@ import { ThemeId, themes } from "../themes";
 const themeIdState = atom<ThemeId>({
   key: "themeId",
   default: "akane",
+  effects: [
+    localStorageEffect("themeId"),
+  ],
 });
 
 // Hooks ===================================================
