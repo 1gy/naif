@@ -1,12 +1,18 @@
 import {
+  AppBar,
   Box,
   Divider,
+  IconButton,
   List,
   ListItemButton,
   ListItemText,
   ListSubheader,
+  Toolbar,
+  Typography,
 } from "@mui/material";
 import type { VFC } from "react";
+import { useIsPc } from "../../hooks/useIsPc";
+import { MenuIcon } from "../../icons/MenuIcon";
 import { Page } from "../../parts/Page";
 import { Base64 } from "./Base64";
 import { Random } from "./Random";
@@ -14,9 +20,11 @@ import { Settings } from "./Settings";
 import {
   TabDefinition,
   TabId,
+  useIsMenuOpen,
   useSelectedTabId,
   useSetSelectedTabId,
   useSortedTabs,
+  useToggleMenuOpen,
 } from "./ToolsPage.logic";
 
 const tabItems: TabDefinition = {
@@ -48,7 +56,10 @@ const Sidebar: VFC = () => {
   const sortedTabs = useSortedTabs(tabItems);
 
   return (
-    <List component="nav" subheader={<ListSubheader>Tools</ListSubheader>}>
+    <List
+      component="nav"
+      subheader={<ListSubheader>Tools</ListSubheader>}
+    >
       {sortedTabs.map((
         [key, item],
       ) => (
@@ -57,7 +68,7 @@ const Sidebar: VFC = () => {
           selected={key === tabId}
           onClick={() => setTabId(key as TabId)}
         >
-          <ListItemText primary={item.text} />
+          <ListItemText primary={item.text} sx={{ ml: 1, mr: 12 }} />
         </ListItemButton>
       ))}
     </List>
@@ -69,7 +80,33 @@ const Content: VFC = () => {
   return <>{tabItems[tabId].component()}</>;
 };
 
+const Titlebar: VFC = () => {
+  const toggleMenuOpen = useToggleMenuOpen();
+
+  return (
+    <AppBar position="static">
+      <Toolbar variant="dense">
+        <IconButton
+          size="large"
+          edge="start"
+          color="inherit"
+          sx={{ mr: 2 }}
+          onClick={toggleMenuOpen}
+        >
+          <MenuIcon />
+        </IconButton>
+        <Typography variant="h6" component="div">
+          Naif
+        </Typography>
+      </Toolbar>
+    </AppBar>
+  );
+};
+
 export const ToolsPage: VFC = () => {
+  const isMenuOpen = useIsMenuOpen();
+  const isPc = useIsPc();
+
   return (
     <Page>
       <Box
@@ -77,22 +114,56 @@ export const ToolsPage: VFC = () => {
           width: "100%",
           height: "100%",
           display: "flex",
-          border: 4,
-          borderColor: "primary.main",
+          flexDirection: "column",
         }}
       >
-        <Box
-          component="aside"
-          sx={{ flexShrink: 0, width: "12em", overflow: "auto" }}
-        >
-          <Sidebar />
+        <Box>
+          <Titlebar />
         </Box>
-        <Divider orientation="vertical" />
         <Box
-          component="main"
-          sx={{ flexGrow: 1, overflow: "hidden", m: 1 }}
+          sx={{
+            flexGrow: 1,
+            display: "flex",
+            border: 4,
+            borderColor: "primary.main",
+            overflow: "hidden",
+            flexDirection: {
+              xs: "column",
+              sm: "row",
+            },
+          }}
         >
-          <Content />
+          <Box
+            component="aside"
+            sx={{
+              flexShrink: 0,
+              overflow: "auto",
+              m: 0,
+              display: isMenuOpen ? "inline" : "none",
+            }}
+          >
+            <Sidebar />
+          </Box>
+          {
+            /* <Divider
+            orientation={isPc ? "vertical" : "horizontal"}
+            sx={{ bgcolor: "primary.main" }}
+          /> */
+          }
+          <Divider
+            orientation={isPc ? "vertical" : "horizontal"}
+            sx={{
+              bgcolor: "primary.main",
+              borderRightWidth: 2,
+              borderBottomWidth: 2,
+            }}
+          />
+          <Box
+            component="main"
+            sx={{ flexGrow: 1, overflow: "hidden", m: 0 }}
+          >
+            <Content />
+          </Box>
         </Box>
       </Box>
     </Page>

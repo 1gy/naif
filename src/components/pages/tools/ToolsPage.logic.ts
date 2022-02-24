@@ -1,4 +1,4 @@
-import { ReactNode, useMemo } from "react";
+import { ReactNode, useCallback, useMemo } from "react";
 import { atom, useRecoilValue, useSetRecoilState } from "recoil";
 
 // Types ===================================================
@@ -13,12 +13,24 @@ export type TabDefinition = Record<TabId, {
 
 // Atoms ===================================================
 
+const isMenuOpenState = atom<boolean>({
+  key: "ToolsPage.isMenuOpen",
+  default: true,
+});
+
 const selectedTabIdState = atom<TabId>({
   key: "ToolsPage.selectedTabId",
   default: "base64",
 });
 
 // Hooks ===================================================
+
+export const useIsMenuOpen = () => useRecoilValue(isMenuOpenState);
+
+export const useToggleMenuOpen = () => {
+  const setMenuOpen = useSetRecoilState(isMenuOpenState);
+  return useCallback(() => setMenuOpen((v) => !v), []);
+};
 
 export const useSelectedTabId = () => useRecoilValue(selectedTabIdState);
 

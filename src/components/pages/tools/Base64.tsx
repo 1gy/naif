@@ -48,19 +48,22 @@ const InOut: VFC = () => {
         width: "100%",
         height: "100%",
         display: "flex",
-        flexDirection: "row",
+        flexDirection: {
+          xs: "column",
+          sm: "row",
+        },
       }}
     >
-      <Box sx={{ width: "50%", height: "100%", p: 4 }}>
+      <Box sx={{ flexGrow: 1, p: 4 }}>
         <Textarea
           value={inputText}
           onChange={(e) => startTransition(() => setInputText(e.target.value))}
         />
       </Box>
-      <Box sx={{ width: "50%", height: "100%", p: 4 }}>
+      <Box sx={{ flexGrow: 1, p: 4 }}>
         <Box sx={{ width: "100%", height: "100%", position: "relative" }}>
           {isPending && <LoadingIndicator />}
-          <Suspense fallback={<>loading</>}>
+          <Suspense fallback={<LoadingIndicator />}>
             <Output />
           </Suspense>
         </Box>
