@@ -56,7 +56,7 @@ const UuidGenerator: VFC = () => {
         </Box>
       </Box>
       <Box sx={{ pl: 4, pr: 4, pb: 4, flexGrow: 1 }}>
-        <Textarea value={uuid} />
+        <Textarea value={uuid} onChange={() => {/** nop */}} />
       </Box>
     </Box>
   );
