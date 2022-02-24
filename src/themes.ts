@@ -1,5 +1,5 @@
 import { createTheme, Theme } from "@mui/material";
-import { amber, green, lightBlue, pink, red } from "@mui/material/colors";
+import { green, lightBlue, orange, pink, red } from "@mui/material/colors";
 
 // Types ===================================================
 
@@ -16,10 +16,10 @@ export type ThemeDefinition = Record<ThemeId, {
 const sango = createTheme({
   palette: {
     primary: {
-      main: pink[200],
+      main: pink[300],
     },
     secondary: {
-      main: pink[100],
+      main: pink[200],
     },
   },
 });
@@ -63,11 +63,11 @@ const chigusa = createTheme({
 const kohaku = createTheme({
   palette: {
     primary: {
-      main: amber[700],
+      main: orange[800],
     },
 
     secondary: {
-      main: amber[600],
+      main: orange[700],
     },
   },
 });
