@@ -144,12 +144,6 @@ export const ToolsPage: VFC = () => {
           >
             <Sidebar />
           </Box>
-          {
-            /* <Divider
-            orientation={isPc ? "vertical" : "horizontal"}
-            sx={{ bgcolor: "primary.main" }}
-          /> */
-          }
           <Divider
             orientation={isPc ? "vertical" : "horizontal"}
             sx={{
