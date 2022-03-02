@@ -1,5 +1,6 @@
 import { ReactNode, useCallback, useMemo } from "react";
 import { atom, useRecoilValue, useSetRecoilState } from "recoil";
+import { localStorageEffect } from "../../../logics/storage";
 
 // Types ===================================================
 
@@ -16,11 +17,17 @@ export type TabDefinition = Record<TabId, {
 const isMenuOpenState = atom<boolean>({
   key: "ToolsPage.isMenuOpen",
   default: true,
+  effects: [
+    localStorageEffect("ToolsPage.isMenuOpen"),
+  ],
 });
 
 const selectedTabIdState = atom<TabId>({
   key: "ToolsPage.selectedTabId",
   default: "base64",
+  effects: [
+    localStorageEffect("ToolsPage.selectedTabId"),
+  ],
 });
 
 // Hooks ===================================================
