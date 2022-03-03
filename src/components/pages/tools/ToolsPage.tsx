@@ -11,7 +11,7 @@ import {
   Typography,
 } from "@mui/material";
 import type { VFC } from "react";
-import { useIsPc } from "../../hooks/useIsPc";
+import { useDevice } from "../../../hooks/device";
 import { MenuIcon } from "../../icons/MenuIcon";
 import { Page } from "../../parts/Page";
 import { Base64 } from "./Base64";
@@ -105,7 +105,7 @@ const Titlebar: VFC = () => {
 
 export const ToolsPage: VFC = () => {
   const isMenuOpen = useIsMenuOpen();
-  const isPc = useIsPc();
+  const device = useDevice();
 
   return (
     <Page>
@@ -145,7 +145,7 @@ export const ToolsPage: VFC = () => {
             <Sidebar />
           </Box>
           <Divider
-            orientation={isPc ? "vertical" : "horizontal"}
+            orientation={device === "desktop" ? "vertical" : "horizontal"}
             sx={{
               bgcolor: "primary.main",
               borderRightWidth: 2,
